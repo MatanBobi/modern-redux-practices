@@ -1,6 +1,14 @@
+import { useEffect } from 'react'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { PokemonsSidebar } from '../../components/PokemonsSidebar'
 import { PokemonView } from '../../components/PokemonView'
+import {
+  asyncGetAllPokemons,
+  setSelectedPokemon,
+  asyncGetPokemonDetails
+} from '../../actions/pokemons'
+
 const PokemonsPageWrapper = styled.div`
   display: grid;
   grid-template-areas:
@@ -9,13 +17,39 @@ const PokemonsPageWrapper = styled.div`
   height: 100%;
 `
 
-export const PokemonsPage = () => {
+export const PokemonsPage = ({
+  asyncGetAllPokemons,
+  asyncGetPokemonDetails,
+  setSelectedPokemon,
+  pokemons,
+  selectedPokemonId,
+  selectedPokemon
+}) => {
   return (
     <PokemonsPageWrapper>
-      <PokemonsSidebar />
-      <PokemonView />
+      <PokemonsSidebar
+        asyncGetAllPokemons={asyncGetAllPokemons}
+        pokemons={pokemons}
+        setSelectedPokemon={setSelectedPokemon}
+      />
+      <PokemonView
+        selectedPokemonId={selectedPokemonId}
+        asyncGetPokemonDetails={asyncGetPokemonDetails}
+        selectedPokemon={selectedPokemon}
+      />
     </PokemonsPageWrapper>
   )
 }
 
-export default PokemonsPage
+export default connect(
+  ({ pokemons }) => ({
+    pokemons: pokemons.data,
+    selectedPokemonId: pokemons.selectedPokemonId,
+    selectedPokemon: pokemons.selectedPokemonData
+  }),
+  {
+    asyncGetAllPokemons,
+    setSelectedPokemon,
+    asyncGetPokemonDetails
+  }
+)(PokemonsPage)
