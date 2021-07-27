@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { asyncGetAllPokemons, setSelectedPokemon } from '../../actions/pokemons'
+import { getAllPokemons, setSelectedPokemon } from '../../reducers/pokemons-slice'
 
 const PokemonItem = styled.ol`
   margin: 4px 0;
@@ -12,7 +12,7 @@ export const PokemonsSidebar = () => {
   const pokemons = useSelector(({ pokemons }) => pokemons.data)
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(asyncGetAllPokemons())
+    dispatch(getAllPokemons())
   }, [dispatch])
   return (
     <ul>

@@ -1,10 +1,16 @@
 import PokemonsPage from './screens/PokemonPage'
 import { Provider } from 'react-redux'
-import { applyMiddleware, createStore } from 'redux'
-import thunk from 'redux-thunk'
-import rootReducer from './reducers'
+import { configureStore } from '@reduxjs/toolkit'
+import pokemonsSlice from './reducers/pokemons-slice'
 
-const store = createStore(rootReducer, applyMiddleware(thunk))
+const reducer = {
+  pokemons: pokemonsSlice
+}
+
+const store = configureStore({
+  reducer,
+  devTools: process.env.NODE_ENV !== 'production'
+})
 
 export const PokemonRoot = () => {
   return (

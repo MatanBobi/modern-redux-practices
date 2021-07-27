@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { asyncGetPokemonDetails } from '../../actions/pokemons'
+import { getPokemonDetails } from '../../reducers/pokemons-slice'
 
 const PokemonCard = styled.div`
   padding: 15px;
@@ -23,7 +23,7 @@ export const PokemonView = () => {
 
   useEffect(() => {
     if (selectedPokemonId) {
-      dispatch(asyncGetPokemonDetails(selectedPokemonId.url))
+      dispatch(getPokemonDetails(selectedPokemonId.url))
     }
   }, [selectedPokemonId, dispatch])
 
