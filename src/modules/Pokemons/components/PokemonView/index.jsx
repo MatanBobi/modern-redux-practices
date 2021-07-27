@@ -1,7 +1,6 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { getPokemonDetails } from '../../reducers/pokemons-slice'
+import { useGetPokemonByNameQuery } from '../../services/api'
 
 const PokemonCard = styled.div`
   padding: 15px;
@@ -16,16 +15,14 @@ export const PokemonView = () => {
   const selectedPokemonId = useSelector(
     ({ pokemons }) => pokemons.selectedPokemonId
   )
-  const selectedPokemon = useSelector(
-    ({ pokemons }) => pokemons.selectedPokemonData
-  )
-  const dispatch = useDispatch()
 
-  useEffect(() => {
-    if (selectedPokemonId) {
-      dispatch(getPokemonDetails(selectedPokemonId.url))
-    }
-  }, [selectedPokemonId, dispatch])
+  const {
+    data: selectedPokemon,
+    isError,
+    isLoading
+  } = useGetPokemonByNameQuery(selectedPokemonId.name, {
+    skip: !selectedPokemonId.name
+  })
 
   return (
     <div>
