@@ -1,8 +1,10 @@
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { setSelectedPokemon } from '../../reducers/pokemons-slice'
-import { useGetAllPokemonsQuery } from '../../services/api'
+import {
+  getAllPokemons,
+  setSelectedPokemon
+} from '../../reducers/pokemons-slice'
 
 const PokemonItem = styled.li`
   margin: 4px 0;
@@ -34,13 +36,12 @@ const SidebarWrapper = styled.div`
 `
 
 export const PokemonsSidebar = () => {
-  const dispatch = useDispatch()
+  const pokemons = useSelector(({ pokemons }) => pokemons.data)
   const [pokemonsNumber, setPokemonsNumber] = useState(10)
-  const {
-    data: pokemons,
-    isError,
-    isLoading
-  } = useGetAllPokemonsQuery(pokemonsNumber)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getAllPokemons(pokemonsNumber))
+  }, [dispatch, pokemonsNumber])
   return (
     <SidebarWrapper>
       <select onChange={({ target: { value } }) => setPokemonsNumber(value)}>
@@ -52,20 +53,16 @@ export const PokemonsSidebar = () => {
         <option value={150}>150</option>
       </select>
       <ul>
-        {isLoading ? (
-          <div>Loading...</div>
-        ) : (
-          pokemons.map((pokemon) => (
-            <PokemonItem
-              key={pokemon.name}
-              onClick={() => {
-                dispatch(setSelectedPokemon(pokemon))
-              }}
-            >
-              {pokemon.name}
-            </PokemonItem>
-          ))
-        )}
+        {pokemons.map((pokemon) => (
+          <PokemonItem
+            key={pokemon.name}
+            onClick={() => {
+              dispatch(setSelectedPokemon(pokemon))
+            }}
+          >
+            {pokemon.name}
+          </PokemonItem>
+        ))}
       </ul>
     </SidebarWrapper>
   )
