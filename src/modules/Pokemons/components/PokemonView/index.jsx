@@ -4,6 +4,10 @@ import { useGetPokemonByNameQuery } from '../../services/api'
 
 const PokemonCard = styled.div`
   padding: 15px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
 `
 
 const SmallImage = styled.img`
@@ -25,16 +29,14 @@ export const PokemonView = () => {
   })
 
   return (
-    <div>
-      <PokemonCard>
-        {selectedPokemon && (
-          <SmallImage
-            src={`https://pokeres.bastionbot.org/images/pokemon/${selectedPokemon.id}.png`}
-            alt={selectedPokemon.name}
-          />
-        )}
-        <div>{selectedPokemon?.name}</div>
-      </PokemonCard>
-    </div>
+    <PokemonCard>
+      {selectedPokemon && (
+        <SmallImage
+          src={`https://pokeres.bastionbot.org/images/pokemon/${selectedPokemon.id}.png`}
+          alt={selectedPokemon.name}
+        />
+      )}
+      <div>{selectedPokemon?.name}</div>
+    </PokemonCard>
   )
 }
