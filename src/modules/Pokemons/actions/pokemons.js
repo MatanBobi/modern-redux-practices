@@ -27,10 +27,10 @@ export const ACTION_TYPES = {
     payload
   })
   
-  export const asyncGetAllPokemons = () => {
+  export const asyncGetAllPokemons = (limit) => {
     return function (dispatch) {
       dispatch(getAllPokemonsRequest())
-      fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
+      fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`)
         .then((response) => response.json())
         .then((data) => {
           dispatch(getAllPokemonsSuccess(data.results))
