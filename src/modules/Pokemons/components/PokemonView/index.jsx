@@ -35,7 +35,7 @@ export const PokemonView = () => {
     <PokemonCard>
       {selectedPokemon && (
         <SmallImage
-          src={`https://pokeres.bastionbot.org/images/pokemon/${selectedPokemon.id}.png`}
+          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${selectedPokemon.id}.png`}
           alt={selectedPokemon.name}
         />
       )}
