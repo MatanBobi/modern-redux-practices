@@ -40,8 +40,8 @@ export const PokemonsSidebar = () => {
   }, [dispatch, pokemonsNumber])
   return (
     <SidebarWrapper>
-      <select onChange={({ target: { value } }) => setPokemonsNumber(value)}>
-        <option value={10} selected>
+      <select onChange={({ target: { value } }) => setPokemonsNumber(value)} defaultValue={10}>
+        <option value={10}>
           10
         </option>
         <option value={20}>20</option>
